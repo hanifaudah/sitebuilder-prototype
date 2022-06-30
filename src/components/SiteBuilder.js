@@ -55,7 +55,11 @@ const PageCSS = styled.div`
 `;
 
 const Page = (props) => {
-  return <PageCSS {...props}></PageCSS>;
+  return (
+    <PageCSS {...props}>
+      {props.layoutComponent ? props.layoutComponent(props.content) : null}
+    </PageCSS>
+  );
 };
 
 const layoutComponents = {
@@ -67,7 +71,7 @@ const layoutComponents = {
 
 const SiteBuilder = () => {
   const [pages, setPages] = useState([{}, {}]);
-  const [activeLayoutIdx, setCurrentActiveLayoutIdx] = useState(null);
+  const [activeLayoutId, setCurrentActiveLayoutId] = useState(null);
 
   return (
     <CSS>
@@ -79,7 +83,7 @@ const SiteBuilder = () => {
               key={idx}
               draggable
               onDragStart={() => {
-                setCurrentActiveLayoutIdx(layoutId);
+                setCurrentActiveLayoutId(layoutId);
               }}
             >
               {component()}
@@ -89,14 +93,15 @@ const SiteBuilder = () => {
       </div>
       <div id="workspace">
         <div id="workspace-content">
-          {pages.map((pageContent, idx) => (
+          {pages.map(({ content, component }, idx) => (
             <Page
               onDrop={() => {
-                console.log(activeLayoutIdx);
-                setCurrentActiveLayoutIdx(null);
+                pages[idx] = layoutComponents[activeLayoutId];
+                setCurrentActiveLayoutId(null);
               }}
               onDragOver={(e) => e.preventDefault()}
-              content={pageContent}
+              content={content}
+              layoutComponent={component}
               key={idx}
             />
           ))}
