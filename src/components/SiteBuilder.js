@@ -30,10 +30,6 @@ const CSS = styled.div`
 
     #workspace-content {
       height: max-content;
-
-      & div + div {
-        border-top: 4px dashed rgba(0, 0, 0, 0.4);
-      }
     }
   }
 `;
@@ -52,6 +48,10 @@ const PageCSS = styled.div`
   height: ${9 * 4}em;
   font-size: 1em;
   background: white;
+
+  & + & {
+    border-top: 4px dashed rgba(0, 0, 0, 0.4);
+  }
 `;
 
 const Page = (props) => {
@@ -81,7 +81,8 @@ const SiteBuilder = () => {
     <CSS>
       <div id="layouts">
         {Object.keys(layoutComponents).map((layoutId, idx) => {
-          const { component } = layoutComponents[layoutId];
+          const { component, content } = layoutComponents[layoutId];
+          console.log(content);
           return (
             <LayoutContainer
               key={idx}
@@ -101,7 +102,10 @@ const SiteBuilder = () => {
           {pages.map(({ content, component }, idx) => (
             <Page
               onDrop={() => {
-                pages[idx] = layoutComponents[activeLayoutId];
+                pages[idx] = {
+                  ...layoutComponents[activeLayoutId],
+                  content: { ...layoutComponents[activeLayoutId].content },
+                };
                 setCurrentActiveLayoutId(null);
               }}
               onDragOver={(e) => e.preventDefault()}
@@ -112,8 +116,8 @@ const SiteBuilder = () => {
                       component({
                         content,
                         editable: true,
-                        setContent: (content) => {
-                          pages[idx].content = content;
+                        setContent: (name, content) => {
+                          pages[idx].content[name] = content;
                         },
                       })
                   : null

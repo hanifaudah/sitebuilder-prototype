@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Text } from "../Inputs";
 
 const CSS = styled.div`
   display: flex;
@@ -11,16 +12,25 @@ const CSS = styled.div`
   padding: 1em;
   gap: 1em;
 
-  h1 {
+  #left {
+    width: 20em;
+  }
+
+  #right {
+    width: 100%;
+  }
+
+  #header {
     text-align: left;
     margin: 0;
     font-size: 2em;
   }
 
-  p {
+  #paragraph {
     text-align: left;
     margin: 0;
     font-size: 1em;
+    font-weight: normal;
   }
 `;
 
@@ -35,10 +45,30 @@ class Layout2 extends React.Component {
     this.state = props.content || Layout2.initialContent;
   }
   render() {
+    const { editable, setContent } = this.props;
+
     return (
       <CSS>
-        <h1>{this.props?.content?.header || this.state.header}</h1>
-        <p>{this.props?.content?.paragraph || this.state.paragraph}</p>
+        <div id="left">
+          <Text
+            setContent={setContent}
+            editable={editable}
+            id="header"
+            name="header"
+            content={this.props?.content}
+            initialContent={this.state}
+          />
+        </div>
+        <div id="right">
+          <Text
+            setContent={setContent}
+            editable={editable}
+            id="paragraph"
+            name="paragraph"
+            content={this.props?.content}
+            initialContent={this.state}
+          />
+        </div>
       </CSS>
     );
   }

@@ -29,20 +29,18 @@ class Layout1 extends React.Component {
     this.state = props.content || Layout1.initialContent;
   }
   render() {
-    const { editable, setContent, content: currentContent } = this.props;
+    const { editable, setContent } = this.props;
 
     return (
       <CSS>
         <Text
-          setContent={(name, content) =>
-            setContent({ ...currentContent, [name]: content })
-          }
+          setContent={setContent}
           editable={editable}
           id="header"
           name="header"
-        >
-          {this.props?.content?.header || this.state.header}
-        </Text>
+          content={this.props?.content}
+          initialContent={this.state}
+        />
       </CSS>
     );
   }

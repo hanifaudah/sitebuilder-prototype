@@ -5,12 +5,16 @@ export const Text = (props) => {
     contentEditable: true,
     suppressContentEditableWarning: true,
     onInput: (e) => setContent(name, e.currentTarget.textContent),
-    style: { background: "rgba(0, 0, 0, .4)", minWidth: "1em" },
+    style: {
+      background: "rgba(0, 0, 0, .4)",
+      minWidth: "1em",
+      maxWidth: "max-content",
+    },
   };
 
   return (
     <h1 {...(editable ? editableProps : {})} {...{ id, className }}>
-      {props.children}
+      {props?.content?.[name] || props?.initialContent?.[name]}
     </h1>
   );
 };
