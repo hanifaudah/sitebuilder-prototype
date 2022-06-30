@@ -12,6 +12,12 @@ const CSS = styled.div`
   padding: 1em;
   gap: 1em;
 
+  ${(props) => {
+    if (props.color) return "background: " + props.color;
+    else if (props.src) return 'background-image: url("' + props.src + '")';
+    else return "background: white";
+  }};
+
   #left {
     width: 20em;
   }

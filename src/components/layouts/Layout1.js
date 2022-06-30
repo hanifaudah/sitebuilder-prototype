@@ -17,6 +17,12 @@ const CSS = styled.div`
     font-weight: bold;
     margin: 0;
   }
+
+  ${(props) => {
+    if (props.color) return "background: " + props.color;
+    else if (props.src) return 'background-image: url("' + props.src + '")';
+    else return "background: white";
+  }};
 `;
 
 class Layout1 extends React.Component {
@@ -32,7 +38,7 @@ class Layout1 extends React.Component {
     const { editable, setContent } = this.props;
 
     return (
-      <CSS>
+      <CSS {...this.props}>
         <Text
           setContent={setContent}
           editable={editable}
