@@ -7,7 +7,6 @@ const CSS = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 100%;
-  background: white;
   box-sizing: border-box;
   padding: 1em;
   gap: 1em;
@@ -54,7 +53,7 @@ class Layout2 extends React.Component {
     const { editable, setContent } = this.props;
 
     return (
-      <CSS>
+      <CSS {...this.props}>
         <div id="left">
           <Text
             setContent={setContent}
