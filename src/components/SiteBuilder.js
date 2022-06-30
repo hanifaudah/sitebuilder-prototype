@@ -65,11 +65,11 @@ const Page = (props) => {
 const layoutComponents = {
   [Layout1.id]: {
     initialContent: Layout1.initialContent,
-    component: (content) => <Layout1 content={content} />,
+    component: (props) => <Layout1 {...props} />,
   },
   [Layout2.id]: {
     initialContent: Layout2.initialContent,
-    component: (content) => <Layout2 content={content} />,
+    component: (props) => <Layout2 {...props} />,
   },
 };
 
@@ -105,8 +105,15 @@ const SiteBuilder = () => {
               }}
               onDragOver={(e) => e.preventDefault()}
               content={content}
-              layoutComponent={component}
+              layoutComponent={
+                component
+                  ? (content) => component({ content, editable: true })
+                  : null
+              }
               key={idx}
+              setContent={(content) => {
+                pages[idx].content = content;
+              }}
             />
           ))}
         </div>
