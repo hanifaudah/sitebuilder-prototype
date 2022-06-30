@@ -64,11 +64,11 @@ const Page = (props) => {
 
 const layoutComponents = {
   [Layout1.id]: {
-    initialContent: Layout1.initialContent,
+    content: Layout1.initialContent,
     component: (props) => <Layout1 {...props} />,
   },
   [Layout2.id]: {
-    initialContent: Layout2.initialContent,
+    content: Layout2.initialContent,
     component: (props) => <Layout2 {...props} />,
   },
 };
@@ -96,6 +96,7 @@ const SiteBuilder = () => {
         })}
       </div>
       <div id="workspace">
+        <button onClick={() => console.log(pages)}>Data</button>
         <div id="workspace-content">
           {pages.map(({ content, component }, idx) => (
             <Page
@@ -107,13 +108,17 @@ const SiteBuilder = () => {
               content={content}
               layoutComponent={
                 component
-                  ? (content) => component({ content, editable: true })
+                  ? (content) =>
+                      component({
+                        content,
+                        editable: true,
+                        setContent: (content) => {
+                          pages[idx].content = content;
+                        },
+                      })
                   : null
               }
               key={idx}
-              setContent={(content) => {
-                pages[idx].content = content;
-              }}
             />
           ))}
         </div>

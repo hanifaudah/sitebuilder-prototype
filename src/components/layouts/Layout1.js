@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Text } from "../Inputs";
 
 const CSS = styled.div`
   display: flex;
@@ -11,9 +12,10 @@ const CSS = styled.div`
   box-sizing: border-box;
   padding: 1em;
 
-  h1 {
+  #header {
     font-size: 2em;
     font-weight: bold;
+    margin: 0;
   }
 `;
 
@@ -27,20 +29,20 @@ class Layout1 extends React.Component {
     this.state = props.content || Layout1.initialContent;
   }
   render() {
-    const editableProps = {
-      contentEditable: true,
-      suppressContentEditableWarning: true,
-      onInput: (e) => console.log(e.currentTarget.textContent),
-      style: { background: "rgba(0, 0, 0, .4)", minWidth: "1em" },
-    };
-
-    const { editable } = this.props;
+    const { editable, setContent, content: currentContent } = this.props;
 
     return (
       <CSS>
-        <h1 {...(editable ? editableProps : {})}>
+        <Text
+          setContent={(name, content) =>
+            setContent({ ...currentContent, [name]: content })
+          }
+          editable={editable}
+          id="header"
+          name="header"
+        >
           {this.props?.content?.header || this.state.header}
-        </h1>
+        </Text>
       </CSS>
     );
   }
