@@ -18,16 +18,17 @@ h1 {
 `
 
 class Layout1 extends React.Component {
-  constructor() {
+  static id = '2757b072-a5c4-4f1d-8b9d-13f24c64fa28'
+  static initialContent = {
+    header: 'Sample Text'
+  }
+  constructor(props) {
     super();
-    this.state = {
-      id: '2757b072-a5c4-4f1d-8b9d-13f24c64fa28',
-      header: 'Sample Text'
-    };
+    this.state = props.content || Layout1.initialContent
   }
   render() {
     return <CSS>
-      <h1>{this.state.header}</h1>
+      <h1>{this.props?.content?.header || this.state.header}</h1>
     </CSS>
   }
 }

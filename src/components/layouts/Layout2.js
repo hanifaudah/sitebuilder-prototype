@@ -34,9 +34,11 @@ class Layout2 extends React.Component {
     };
   }
   render() {
+    const { header, paragraph } = this.props.content
+
     return <CSS>
-      <h1>{this.state.header}</h1>
-      <p>{this.state.paragraph}</p>
+      <h1>{header || this.state.header}</h1>
+      <p>{paragraph || this.state.paragraph}</p>
     </CSS>
   }
 }
