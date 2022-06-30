@@ -54,8 +54,8 @@ const PageCSS = styled.div`
   background: white;
 `;
 
-const Page = ({ content }) => {
-  return <PageCSS></PageCSS>;
+const Page = (props) => {
+  return <PageCSS {...props}></PageCSS>;
 };
 
 const layoutComponents = {
@@ -67,6 +67,7 @@ const layoutComponents = {
 
 const SiteBuilder = () => {
   const [pages, setPages] = useState([{}, {}]);
+  const [activeLayoutIdx, setCurrentActiveLayoutIdx] = useState(null);
 
   return (
     <CSS>
@@ -77,7 +78,9 @@ const SiteBuilder = () => {
             <LayoutContainer
               key={idx}
               draggable
-              onDragStart={() => console.log(layoutId)}
+              onDragStart={() => {
+                setCurrentActiveLayoutIdx(layoutId);
+              }}
             >
               {component()}
             </LayoutContainer>
@@ -87,7 +90,15 @@ const SiteBuilder = () => {
       <div id="workspace">
         <div id="workspace-content">
           {pages.map((pageContent, idx) => (
-            <Page content={pageContent} key={idx} />
+            <Page
+              onDrop={() => {
+                console.log(activeLayoutIdx);
+                setCurrentActiveLayoutIdx(null);
+              }}
+              onDragOver={(e) => e.preventDefault()}
+              content={pageContent}
+              key={idx}
+            />
           ))}
         </div>
       </div>
