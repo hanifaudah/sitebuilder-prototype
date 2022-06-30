@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import Layout1 from "./layouts/Layout1";
-// import Layout2 from './layouts/Layout2'
+import Layout2 from "./layouts/Layout2";
 
 const CSS = styled.div`
   display: flex;
@@ -48,9 +48,9 @@ const LayoutContainer = styled.div`
 `;
 
 const PageCSS = styled.div`
-  width: 16em;
-  height: 9em;
-  font-size: 4em;
+  width: ${16 * 4}em;
+  height: ${9 * 4}em;
+  font-size: 1em;
   background: white;
 `;
 
@@ -66,6 +66,10 @@ const layoutComponents = {
   [Layout1.id]: {
     initialContent: Layout1.initialContent,
     component: (content) => <Layout1 content={content} />,
+  },
+  [Layout2.id]: {
+    initialContent: Layout2.initialContent,
+    component: (content) => <Layout2 content={content} />,
   },
 };
 
